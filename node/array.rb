@@ -6,7 +6,6 @@ class JSONSchemer
     end
     
     def items(data_type = nil, properties = {})
-      puts "Array#items called with data_type = " + data_type.inspect + " and properties = " + properties.inspect + " and block_given? = " + block_given?.to_s
       if block_given?
         these_items = Items.new
         yield these_items
@@ -34,8 +33,6 @@ class JSONSchemer
       # override the Node add_property and ignore 'name', as members of the
       # items array have no use for a name
       def add_property(name = nil, properties = {})
-        puts "Items#add_property called with name = " + name.inspect + " and properties = " + properties.inspect
-        
         @array << properties
       end
     end
