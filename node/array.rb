@@ -5,8 +5,39 @@ module JSONSchemer
       @hash[:type] = 'array'
     end
     
-    def items(type, properties = {})
-      @hash[:items] = properties.merge(:type => type)
+    def items(data_type = nil, properties = {})
+      puts "Array#items called with data_type = " + data_type.inspect + " and properties = " + properties.inspect + " and block_given? = " + block_given?.to_s
+      if block_given?
+        these_items = Items.new
+        yield these_items
+        @hash[:items] = these_items.to_a
+      else
+        @hash[:items] = properties.merge(:type => data_type)
+      end
+    end
+    
+    class Items < Node
+      def initialize
+        @array = []
+      end
+      
+      def to_a
+        @array
+      end
+      
+      def to_hash
+        raise "#to_hash called in an Items instance. This shouldn't happen!"
+      end
+      
+      private
+      
+      # override the Node add_property and ignore 'name', as members of the
+      # items array have no use for a name
+      def add_property(name = nil, properties = {})
+        puts "Items#add_property called with name = " + name.inspect + " and properties = " + properties.inspect
+        
+        @array << properties
+      end
     end
   end
 end

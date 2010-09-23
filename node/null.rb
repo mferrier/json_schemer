@@ -1,8 +1,8 @@
 module JSONSchemer
-  class String < SimpleNode
+  class Null < SimpleNode
     def initialize
       super
-      @hash[:type] = 'string'
+      @hash[:type] = 'null'
     end
   end
 end

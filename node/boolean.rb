@@ -1,8 +1,8 @@
 module JSONSchemer
-  class String < SimpleNode
+  class Boolean < SimpleNode
     def initialize
       super
-      @hash[:type] = 'string'
+      @hash[:type] = 'boolean'
     end
   end
 end

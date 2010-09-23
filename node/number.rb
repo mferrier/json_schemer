@@ -1,8 +1,8 @@
 module JSONSchemer
-  class String < SimpleNode
+  class Number < SimpleNode
     def initialize
       super
-      @hash[:type] = 'string'
+      @hash[:type] = 'number'
     end
   end
 end

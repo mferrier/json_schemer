@@ -7,15 +7,15 @@ str = JSONSchemer.object do |card|
     fn.description "Formatted Name"
   end
 
-  card.string :family_name
+  card.string :familyName
   card.string :givenName
-  card.array :additionalName do |additionalName|
+  card.array :additionalName, :optional => true do |additionalName|
     additionalName.items "string"
   end
-  card.array :honorificPrefix do |honorificPrefix|
+  card.array :honorificPrefix, :optional => true do |honorificPrefix|
     honorificPrefix.items "string"
   end
-  card.array :honorificSuffix do |honorificSuffix|
+  card.array :honorificSuffix, :optional => true do |honorificSuffix|
     honorificSuffix.items "string"
   end
   card.string :sound, :optional => true, :format => :attachment
@@ -32,7 +32,6 @@ str = JSONSchemer.object do |card|
   card.object :adr, :optional => true, :ref => "http://json-schema.org/address#properties"
   card.string :tz, :optional => true
   card.object :geo, :optional => true, :ref => "http://json-schema.org/geo#properties"
-  card.string :familyName
   card.string :photo, :format => :image, :optional => true
   card.string :logo, :format => :image, :optional => true
   card.string :bday, :format => :date, :optional => true
@@ -42,6 +41,21 @@ str = JSONSchemer.object do |card|
     org.string :organizationName
     org.string :organizationUnit
   end
+  
+  card.array :children, :optional => true do |children|
+    children.items do |items|
+      items.string
+      items.object :name do |name|
+        name.string :first_name
+        name.string :last_name
+      end
+    end
+  end
+  
+  card.number :height_in_meters
+  card.integer :age
+  card.boolean :male
+  card.null :nil
 end
 
 puts str
