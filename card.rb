@@ -1,6 +1,7 @@
 require 'json_schemer'
 
-str = JSONSchemer.object do |card|
+schema = JSONSchemer.new
+schema.define do |card|
   card.description "A representation of a person, company, organization, or place"
 
   card.string :fn, :optional => true do |fn|
@@ -58,4 +59,4 @@ str = JSONSchemer.object do |card|
   card.null :nil
 end
 
-puts str
+puts schema.to_json

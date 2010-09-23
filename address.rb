@@ -1,6 +1,7 @@
 require 'json_schemer'
 
-puts(JSONSchemer.object do |address|
+schema = JSONSchemer.new
+schema.define do |address|
   address.description "An Address following the convention of http://microformats.org/wiki/hcard"
   address.string "post-office-box", :optional => true
   address.string "extended-address", :optional => true
@@ -8,4 +9,6 @@ puts(JSONSchemer.object do |address|
   address.string "region"
   address.string "postal-code", :optional => true
   address.string "country-name"
-end)
+end
+
+puts schema.to_json

@@ -1,4 +1,4 @@
-module JSONSchemer
+class JSONSchemer
   class Array < Node
     def initialize
       super

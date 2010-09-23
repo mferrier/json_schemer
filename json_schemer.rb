@@ -14,14 +14,24 @@ require 'node/array'
 
 require 'ruby-debug'
 
-module JSONSchemer
-  extend self
-  
-  def object(properties = {})
+class JSONSchemer
+  def initialize
+    @hash = {}
+  end
+
+  def define(properties = {})
     output = properties.merge(:type => 'object')
     # top level is always an object
     node = JSONSchemer::Object.new
     yield node if block_given?
-    JSON.pretty_generate(output.merge(node.to_hash))
+    @hash = output.merge(node.to_hash)
+  end
+  
+  def to_json
+    JSON.pretty_generate(@hash)
+  end
+  
+  def to_hash
+    @hash
   end
 end

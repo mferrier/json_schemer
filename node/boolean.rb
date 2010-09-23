@@ -1,4 +1,4 @@
-module JSONSchemer
+class JSONSchemer
   class Boolean < SimpleNode
     def initialize
       super

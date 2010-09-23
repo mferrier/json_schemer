@@ -1,4 +1,4 @@
-module JSONSchemer
+class JSONSchemer
   class SimpleNode < Node
     def initialize
       super

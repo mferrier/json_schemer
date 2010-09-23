@@ -1,4 +1,4 @@
-module JSONSchemer
+class JSONSchemer
   class Node
     # valid data types
     @@data_types = %w(number any boolean array null string object integer)
