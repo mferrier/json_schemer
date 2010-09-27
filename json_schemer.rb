@@ -32,6 +32,8 @@ class JSONSchemer
   end
   
   def to_hash
-    @hash
+    # run it through and back to stringify keys
+    # FIXME: steal ActiveSupport's Hash#stringify_keys
+    JSON.parse(JSON.generate(@hash))
   end
 end
