@@ -1,7 +1,7 @@
 class JSONSchemer
   class Integer < SimpleNode
-    def initialize
-      super
+    def initialize(opts = {})
+      super(opts)
       @hash[:type] = 'integer'
     end
   end

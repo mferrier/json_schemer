@@ -4,8 +4,7 @@ module Card
   extend self
   
   def schema
-    schema = JSONSchemer.new
-    schema.define do |card|
+    JSONSchemer.new do |card|
       card.description "A representation of a person, company, organization, or place"
 
       card.string :fn, :optional => true do |fn|
@@ -34,17 +33,18 @@ module Card
         tel.string :type
         tel.string :value, :format => :phone
       end
-      card.object :adr, :optional => true, :ref => "http://json-schema.org/address#properties"
+      card.object :adr, :optional => true, :ref => "http://json-schema.org/address"
       card.string :tz, :optional => true
-      card.object :geo, :optional => true, :ref => "http://json-schema.org/geo#properties"
+      card.object :geo, :optional => true, :ref => "http://json-schema.org/geo"
       card.string :photo, :format => :image, :optional => true
       card.string :logo, :format => :image, :optional => true
       card.string :bday, :format => :date, :optional => true
       card.string :title, :optional => true
       card.string :role, :optional => true
-      card.object :org, :optional => true do |org|
+      card.object :org do |org|
         org.string :organizationName
         org.string :organizationUnit
+        org.object :event, :ref => "http://json-schema.org/calendar"
       end
         
       card.array :children, :optional => true do |children|
@@ -62,6 +62,5 @@ module Card
       card.boolean :male
       card.null :nil
     end
-    schema
   end
 end

@@ -6,7 +6,9 @@ class JSONSchemer
       @@data_types
     end
     
-    def initialize
+    def initialize(opts = {})
+      @parent = opts.delete(:parent)
+      @refs = []
       @hash = {}
     end
   
@@ -21,7 +23,7 @@ class JSONSchemer
     @@data_types.each do |data_type|
       eval <<-EORUBY
         def #{data_type}(name = nil, properties = {})
-          node = JSONSchemer::#{data_type.titleize}.new
+          node = JSONSchemer::#{data_type.titleize}.new(:parent => self)
           yield node if block_given?
 
           add_property(name, properties.merge(node.to_hash))
@@ -32,24 +34,37 @@ class JSONSchemer
     # for testing
     #
     # def string(name = nil, properties = {})
-    #   node = JSONSchemer::String.new
+    #   node = JSONSchemer::String.new(:parent => self)
     #   yield node if block_given?
     #   
     #   add_property(name, properties.merge(node.to_hash))
     # end
     # 
     # def object(name, properties = {})
-    #   node = JSONSchemer::Object.new
+    #   node = JSONSchemer::Object.new(:parent => self)
     #   yield node if block_given?
     #   
     #   add_property(name, properties.merge(node.to_hash))
     # end
     # 
     # def array(name, properties = {})
-    #   node = JSONSchemer::Array.new
+    #   node = JSONSchemer::Array.new(:parent => self)
     #   yield node if block_given?
     #   
     #   add_property(name, properties.merge(node.to_hash))
     # end
+    
+    # a way to walk from any node up to the root node in the tree
+    def top_level_node
+      @parent || self
+    end
+    
+    def add_ref(ref, node, property_name)
+      @refs << {:url => ref, :node => node, :property_name => property_name}
+    end
+    
+    def refs
+      @refs
+    end
   end
 end

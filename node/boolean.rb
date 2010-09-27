@@ -1,7 +1,7 @@
 class JSONSchemer
   class Boolean < SimpleNode
-    def initialize
-      super
+    def initialize(opts = {})
+      super(opts)
       @hash[:type] = 'boolean'
     end
   end

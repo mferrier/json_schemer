@@ -1,7 +1,7 @@
 class JSONSchemer
   class SimpleNode < Node
-    def initialize
-      super
+    def initialize(opts = {})
+      super(opts)
     end
     
     private

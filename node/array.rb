@@ -1,7 +1,7 @@
 class JSONSchemer
   class Array < Node
-    def initialize
-      super
+    def initialize(opts = {})
+      super(opts)
       @hash[:type] = 'array'
     end
     
